@@ -21,6 +21,7 @@ export class Database {
                 this.database.names[name] = value;
             }
         }
+        console.log(JSON.stringify(this.database))
     }
 
     /**
@@ -31,6 +32,7 @@ export class Database {
     updateValueCount(value){
         this.setCountForValue(value);
     }
+    
 
     /**
      * Update the value count for an existing name
@@ -62,7 +64,7 @@ export class Database {
      * @param {string} name The name to get
      */
     get(name) {
-        console.log(!!this.database.names[name] ? this.database.names[name] : null);
+        console.log(this.database.names[name] || null);
     }
 
     /**
@@ -82,11 +84,7 @@ export class Database {
      * @param {string} value The value to count
      */
     count(value) {
-        if(!!this.database.valuesCount[value]) {
-            console.log(this.database.valuesCount[value]);
-        } else {
-            console.log(0);
-        }
+      console.log(this.database.valuesCount[value] || 0);
     }
 
     /**
@@ -143,7 +141,7 @@ export class Database {
      */
     handleInput(input) {
         const inputRaw = input.split(' ');
-        const [action, ...args] = [inputRaw]
+        const [action, ...args] = inputRaw;
 
         switch(action) {
             case 'SET':
@@ -194,3 +192,11 @@ export class Database {
         }
     }
 }
+
+const db = new Database();
+db.handleInput('SET color red');
+db.handleInput('SET shade red');
+db.handleInput('GET color');
+db.handleInput('COUNT red');
+db.handleInput('DELETE shade');
+db.handleInput('COUNT red');
